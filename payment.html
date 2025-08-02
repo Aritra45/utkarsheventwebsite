@@ -24,7 +24,11 @@
         <img id="preview" class="preview-img" />
       </div>
 
-      <button type="submit">Submit Payment Proof</button>
+      <button type="submit" id="submitBtn">
+  <span>Submit Payment Proof</span>
+  <div class="loader" id="loader" style="display: none;"></div>
+</button>
+
     </form>
   </div>
 
@@ -89,49 +93,60 @@
     }
 
     document.getElementById("proofForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
+  e.preventDefault();
 
-      const refId = document.getElementById("refId").value.trim();
-      const screenshot = document.getElementById("screenshot").files[0];
+  const submitBtn = document.getElementById("submitBtn");
+  const loader = document.getElementById("loader");
+  const refId = document.getElementById("refId").value.trim();
+  const screenshot = document.getElementById("screenshot").files[0];
 
-      if (!refId || !screenshot || !registrationData) {
-        alert("Please complete the form properly.");
-        return;
-      }
+  if (!refId || !screenshot || !registrationData) {
+    alert("Please complete the form properly.");
+    return;
+  }
 
-      try {
-        const imgUrl = await uploadToCloudinary(screenshot);
+  // Show loader and disable button
+  submitBtn.disabled = true;
+  loader.style.display = "inline-block";
 
-        const entry = {
-          name: registrationData.name?.toUpperCase() || '',
-          phone: registrationData.phone || '',
-          event: registrationData.event || '',
-          amount: registrationData.amount || 0,
-          gender: registrationData.passtype || '',
-          status: "Paid",
-          transId: refId,
-          imgUrl: imgUrl,
-          isNotEntered: true,
-          timestamp: serverTimestamp()
-        };
+  try {
+    const imgUrl = await uploadToCloudinary(screenshot);
 
-        if (registrationData.passtype === "table") {
-          entry.tableCount = registrationData.noOfTables || 1;
-        }
+    const entry = {
+      name: registrationData.name?.toUpperCase() || '',
+      phone: registrationData.phone || '',
+      event: registrationData.event || '',
+      amount: registrationData.amount || 0,
+      gender: registrationData.passtype || '',
+      status: "Paid",
+      transId: refId,
+      imgUrl: imgUrl,
+      isNotEntered: true,
+      timestamp: serverTimestamp()
+    };
 
-        const docRef = await addDoc(collection(db, "users"), entry);
+    if (registrationData.passtype === "table") {
+      entry.tableCount = registrationData.noOfTables || 1;
+    }
 
-        alert("✅ Payment proof submitted successfully!");
-        localStorage.removeItem("registrationData");
+    const docRef = await addDoc(collection(db, "users"), entry);
 
-        // Redirect to success page with docId
-        window.location.href = `success.html?docId=${docRef.id}`;
-        this.reset();
-      } catch (err) {
-        console.error("❌ Error submitting form:", err);
-        alert("There was an error. Please try again.");
-      }
-    });
+    alert("✅ Payment proof submitted successfully!");
+    localStorage.removeItem("registrationData");
+
+    // Redirect to success page with docId
+    window.location.href = `success.html?docId=${docRef.id}`;
+    this.reset();
+  } catch (err) {
+    console.error("❌ Error submitting form:", err);
+    alert("There was an error. Please try again.");
+  } finally {
+    // Hide loader and enable button
+    loader.style.display = "none";
+    submitBtn.disabled = false;
+  }
+});
+
   </script>
 </body>
 </html>
