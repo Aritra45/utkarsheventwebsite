@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ticket QR</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="success.css" />
+</head>
+<body>
+  <h2>🎉 Payment Successful!</h2>
+
+  <div id="qr-wrapper">
+    <div id="ticket-id">Ticket ID: Loading...</div>
+    <canvas id="qrCanvas"></canvas>
+    <div id="user-name">Name: Loading...</div>
+    <div id="warning">Don't Share This QR Code</div>
+  </div>
+  <br>
+  <button class="download-btn" id="downloadBtn">Download Full Image</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCX7aQonuTiaozi1RYLDZ5AmjnfLWhJDxw",
+      authDomain: "utkarsheventapp-682ac.firebaseapp.com",
+      projectId: "utkarsheventapp-682ac",
+      storageBucket: "utkarsheventapp-682ac.appspot.com",
+      messagingSenderId: "160101428562",
+      appId: "1:160101428562:web:4307d9ebf9b57401b7de8b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const params = new URLSearchParams(window.location.search);
+    const docId = params.get("docId");
+
+    async function loadUser() {
+      const docRef = doc(db, "users", docId);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+
+        document.getElementById("ticket-id").innerText = `Ticket ID: ${docId}`;
+        document.getElementById("user-name").innerText = `Name: ${data.name}`;
+
+        QRCode.toCanvas(document.getElementById("qrCanvas"), docId, function (error) {
+          if (error) console.error(error);
+        });
+      } else {
+        document.getElementById("ticket-id").innerText = "User not found.";
+      }
+    }
+
+    loadUser();
+
+    document.getElementById("downloadBtn").addEventListener("click", () => {
+      const qrWrapper = document.getElementById("qr-wrapper");
+      html2canvas(qrWrapper).then(canvas => {
+        const link = document.createElement("a");
+        link.download = `Ticket_${Date.now()}.png`;
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      });
+    });
+
+    // 🚫 Disable Back Button
+    window.history.pushState(null, null, window.location.href);
+    window.addEventListener('popstate', function () {
+      window.history.pushState(null, null, window.location.href);
+    });
+  </script>
+</body>
+</html>

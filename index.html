@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Registration Form</title>
+
+  <!-- Select2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Event Registration</h2>
+    <form id="eventForm">
+      <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required pattern="[0-9]{10}" />
+      </div>
+
+      <div class="form-group">
+        <label for="event">Select Event:</label>
+        <select id="event" name="event" required style="width: 100%;">
+          <option value="">Loading events...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required />
+      </div>
+
+      <div class="form-group">
+        <label for="passtype">Pass Type:</label>
+        <select id="passtype" name="passtype" required>
+          <option value="">--Select--</option>
+          <option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Tables">Tables</option>
+
+        </select>
+      </div>
+
+      <div class="form-group hidden" id="tableCountGroup">
+        <label for="noOfTables">Number of Tables:</label>
+        <input type="number" id="noOfTables" name="noOfTables" min="1" required/>
+      </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <a href="mailto:aritradeb45@gmail.com" class="support-button" title="Email Support">
+  <img src="https://img.icons8.com/material-outlined/24/ffffff/help.png" alt="Support Icon" />
+  Support
+</a>
+
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Select2 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+  <!-- Firebase + Firestore -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCX7aQonuTiaozi1RYLDZ5AmjnfLWhJDxw",
+      authDomain: "utkarsheventapp-682ac.firebaseapp.com",
+      projectId: "utkarsheventapp-682ac",
+      storageBucket: "utkarsheventapp-682ac.appspot.com",
+      messagingSenderId: "160101428562",
+      appId: "1:160101428562:web:4307d9ebf9b57401b7de8b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const eventSelect = document.getElementById("event");
+
+    async function fetchEvents() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "events"));
+        eventSelect.innerHTML = `<option value="">--Select Event--</option>`;
+        querySnapshot.forEach((doc) => {
+          const eventData = doc.data();
+          const option = document.createElement("option");
+          option.value = eventData.name || doc.id;
+          option.textContent = eventData.name || doc.id;
+          eventSelect.appendChild(option);
+        });
+
+        // Initialize Select2 after loading
+        window.dispatchEvent(new Event("events-loaded"));
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    }
+
+    fetchEvents();
+  </script>
+
+  <!-- Local Script -->
+  <script src="script.js"></script>
+
+  <!-- Init Select2 -->
+  <script>
+    window.addEventListener("events-loaded", function () {
+      $('#event').select2({
+        placeholder: "Search or select an event",
+        allowClear: true
+      });
+    });
+  </script>
+</body>
+</html>

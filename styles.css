@@ -1,0 +1,181 @@
+:root {
+  --primary-color: #673ab7;
+  --primary-dark: #512da8;
+  --text-color: #ffffff;
+  --bg-color: #f3f2f7;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: var(--bg-color);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.form-container {
+  background: var(--text-color);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+  margin-bottom: 25px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    padding: 20px;
+  }
+
+  input, select {
+    font-size: 0.95rem;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+}
+
+/* Reset Select2 box to behave like input */
+.select2-container--default .select2-selection--single {
+  height: 44px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  display: block !important;      /* ⛔ Remove flex */
+  padding: 0px 12px 70px !important;          /* Remove built-in padding */
+  box-sizing: border-box;
+}
+
+/* Fully left-align the text */
+.select2-selection__rendered {
+  text-align: left !important;
+  padding-left: 10px !important;  /* Small spacing from edge */
+  color: #333;
+  font-weight: 500;
+  line-height: 44px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block !important;
+}
+
+/* Remove float/extra formatting */
+.select2-selection__rendered span {
+   display: inline !important;
+  float: none !important;
+  vertical-align: middle !important;
+}
+
+/* Optional: fix the arrow to stay aligned */
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 100%;
+  top: 0px;
+  right: 10px;
+}
+
+
+/* Highlight dropdown option on hover */
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: #673ab7;
+  color: white;
+}
+/* Responsive Support Button */
+.support-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-radius: 50px;
+  padding: 12px 20px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.support-button:hover {
+  background-color: #0056b3;
+}
+
+.support-button img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Make it adapt nicely on small screens */
+@media (max-width: 480px) {
+  .support-button {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .support-button img {
+    width: 18px;
+    height: 18px;
+  }
+}

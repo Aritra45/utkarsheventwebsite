@@ -1,0 +1,84 @@
+/* success.css */
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  padding: 20px;
+  background: #fff;
+  margin: 0;
+}
+
+h2 {
+  color: green;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#qr-wrapper {
+  border: 2px solid #ccc;
+  padding: 20px;
+  margin: 0 auto;
+  display: inline-block;
+  background: white;
+  border-radius: 8px;
+  max-width: 90vw;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#ticket-id {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+canvas {
+  margin: 20px auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#user-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+  word-break: break-word;
+}
+
+#warning {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 5px;
+}
+
+.download-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #673ab7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.download-btn:hover {
+  background: #512da8;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  h2 {
+    font-size: 20px;
+  }
+  #ticket-id, #user-name, #warning {
+    font-size: 16px;
+  }
+  .download-btn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}

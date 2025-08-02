@@ -1,0 +1,117 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 2rem;
+  margin: 0;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  background-color: #fff;
+  padding: 2rem;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #673ab7;
+  border: none;
+  color: white;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+.preview-img {
+  max-width: 100%;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+#payment-info {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+#payment-info p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+#payment-info img {
+  margin-top: 10px;
+  max-width: 100%;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .form-container {
+    padding: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+
+  #payment-info p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: 1rem;
+  }
+
+  h2, h3 {
+    font-size: 1.2rem;
+  }
+
+  button {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+  }
+
+  #payment-info p {
+    font-size: 0.9rem;
+  }
+}
